@@ -1,0 +1,58 @@
+# ============================
+# Python
+# ============================
+__pycache__/
+*.py[cod]
+*.egg-info/
+
+# Virtual Environment
+venv/
+.venv/
+env/
+
+# Environment Variables
+.env
+
+# Jupyter
+.ipynb_checkpoints/
+
+# VS Code
+.vscode/
+
+# Logs
+*.log
+
+# ============================
+# Datasets (Do NOT Upload)
+# ============================
+dataset/raw/
+dataset/cleaned/
+dataset/processed/
+dataset/feature_engineered/
+
+# Large CSV Files
+
+dataset/
+*.csv
+*.pkl
+
+# ============================
+# ML Models
+# ============================
+*.pkl
+*.joblib
+
+# ============================
+# Node
+# ============================
+frontend/node_modules/
+
+# ============================
+# Build
+# ============================
+dist/
+build/
+
+# OS Files
+.DS_Store
+Thumbs.db
