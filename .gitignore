@@ -25,15 +25,17 @@ env/
 # ============================
 # Datasets (Do NOT Upload)
 # ============================
-dataset/raw/
-dataset/cleaned/
-dataset/processed/
-dataset/feature_engineered/
+# Ignore dataset contents
+dataset/raw/*
+dataset/cleaned/*
+dataset/processed/*
+dataset/feature_engineered/*
+dataset/sample/*
 
-# Large CSV Files
+# Keep documentation
+!dataset/README.md
 
-dataset/
-*.csv
+# Ignore large files
 *.pkl
 
 # ============================
