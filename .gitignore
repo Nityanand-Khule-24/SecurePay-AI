@@ -58,3 +58,6 @@ build/
 # OS Files
 .DS_Store
 Thumbs.db
+
+#supabase keys 
+.env
