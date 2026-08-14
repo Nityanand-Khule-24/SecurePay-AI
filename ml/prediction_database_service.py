@@ -1,16 +1,12 @@
-from prediction import predict_fraud
+from ml.prediction import predict_fraud
 from database.fraud_prediction_service import insert_fraud_prediction
 
-def predict_and_store(transaction_id,transaction_features):
-    """
-    run the fraud model and store thr=e prediction in supabase...
-    """
 
-    # run ml prediction
+def predict_and_store(transaction_id, transaction_features):
+
     result = predict_fraud(transaction_features)
 
-    #prepare database recored
-    prediction_data ={
+    prediction_data = {
         "transaction_id": transaction_id,
         "fraud_probability": result["fraud_probability"],
         "prediction": result["prediction"],
@@ -18,12 +14,11 @@ def predict_and_store(transaction_id,transaction_features):
         "model_version": "RandomForest-v1"
     }
 
-    # store prediction in supabase
-    stored_prediction= insert_fraud_prediction(
+    stored_prediction = insert_fraud_prediction(
         prediction_data
     )
 
-    return{
+    return {
         "transaction_id": transaction_id,
         "prediction": result["prediction"],
         "fraud_probability": result["fraud_probability"],
