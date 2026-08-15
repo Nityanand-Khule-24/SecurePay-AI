@@ -1,4 +1,4 @@
-from connection import supabase
+from database.connection import supabase
 
 def insert_transaction(data):
     """

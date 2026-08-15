@@ -1,12 +1,17 @@
+from datetime import datetime
+
 from pydantic import BaseModel
 
 
 class TransactionRequest(BaseModel):
 
-    transaction_id:int
+    transaction_id: int
 
     type: str
     amount: float
+
+    sender_id: str
+    receiver_id: str
 
     oldbalanceorg: float
     newbalanceorig: float
@@ -14,23 +19,30 @@ class TransactionRequest(BaseModel):
     oldbalancedest: float
     newbalancedest: float
 
-    large_transaction: int
+    created_at: datetime
 
-    sender_transaction_count: int
-    previous_sender_amount: float
+class NewTransactionRequest(BaseModel):
 
-    receiver_transaction_count: int
-    previous_receiver_amount: float
+    type:str
+    amount:float
 
-    previous_receiver_fraud: int
-    historical_receiver_fraud_rate: float
+    sender_id:str
+    receiver_id:str
 
-    sender_balance_change: float
-    receiver_balance_change: float
+    oldbalanceorg:float
+    newbalanceorig:float
 
-    balance_ratio: float
+    oldbalancedest:float
+    newbalancedest:float
 
-    hour: int
-    night_transaction: int
+    created_at:datetime
 
-    historical_receiver_risk_score: float
+class BasicTransactionRequest(BaseModel):
+
+    transaction_id: int
+
+    type: str
+    amount: float
+
+    sender_id: str
+    receiver_id: str
