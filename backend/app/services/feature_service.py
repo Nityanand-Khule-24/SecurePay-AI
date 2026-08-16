@@ -83,10 +83,13 @@ def calculate_history_features(
     # -----------------------------------------------------
 
     if sender_history:
+
         previous_sender_amount = float(
             sender_history[-1]["amount"]
         )
+
     else:
+
         previous_sender_amount = 0.0
 
     # -----------------------------------------------------
@@ -102,11 +105,31 @@ def calculate_history_features(
     # -----------------------------------------------------
 
     if receiver_history:
+
         previous_receiver_amount = float(
             receiver_history[-1]["amount"]
         )
+
     else:
+
         previous_receiver_amount = 0.0
+
+    # -----------------------------------------------------
+    # Only transactions with known fraud status
+    # -----------------------------------------------------
+    #
+    # is_fraud = NULL means actual fraud status
+    # is not known yet.
+    #
+    # We must NOT include NULL transactions when
+    # calculating historical fraud statistics.
+    # -----------------------------------------------------
+
+    known_receiver_transactions = [
+        transaction
+        for transaction in receiver_history
+        if transaction.get("is_fraud") is not None
+    ]
 
     # -----------------------------------------------------
     # Previous receiver fraud
@@ -114,18 +137,26 @@ def calculate_history_features(
 
     previous_receiver_fraud = sum(
         int(transaction["is_fraud"])
-        for transaction in receiver_history
+        for transaction in known_receiver_transactions
+    )
+
+    # -----------------------------------------------------
+    # Number of transactions with known fraud status
+    # -----------------------------------------------------
+
+    known_receiver_transaction_count = len(
+        known_receiver_transactions
     )
 
     # -----------------------------------------------------
     # Historical receiver fraud rate
     # -----------------------------------------------------
 
-    if receiver_transaction_count > 0:
+    if known_receiver_transaction_count > 0:
 
         historical_receiver_fraud_rate = (
             previous_receiver_fraud
-            / receiver_transaction_count
+            / known_receiver_transaction_count
         )
 
     else:
@@ -133,6 +164,7 @@ def calculate_history_features(
         historical_receiver_fraud_rate = 0.0
 
     return {
+
         "sender_transaction_count":
             sender_transaction_count,
 
@@ -213,6 +245,7 @@ def calculate_transaction_features(
     )
 
     return {
+
         "large_transaction":
             large_transaction,
 
@@ -276,11 +309,17 @@ def build_features(
 
     transaction_features = (
         calculate_transaction_features(
+
             amount=amount,
+
             oldbalanceorg=oldbalanceorg,
+
             newbalanceorig=newbalanceorig,
+
             oldbalancedest=oldbalancedest,
+
             newbalancedest=newbalancedest,
+
             created_at=created_at
         )
     )
@@ -328,84 +367,103 @@ def build_features(
 
     features = {
 
+        # 1
         "type":
             transaction_type,
 
+        # 2
         "amount":
             amount,
 
+        # 3
         "oldbalanceorg":
             oldbalanceorg,
 
+        # 4
         "newbalanceorig":
             newbalanceorig,
 
+        # 5
         "oldbalancedest":
             oldbalancedest,
 
+        # 6
         "newbalancedest":
             newbalancedest,
 
+        # 7
         "large_transaction":
             transaction_features[
                 "large_transaction"
             ],
 
+        # 8
         "sender_transaction_count":
             history_features[
                 "sender_transaction_count"
             ],
 
+        # 9
         "previous_sender_amount":
             history_features[
                 "previous_sender_amount"
             ],
 
+        # 10
         "receiver_transaction_count":
             history_features[
                 "receiver_transaction_count"
             ],
 
+        # 11
         "previous_receiver_amount":
             history_features[
                 "previous_receiver_amount"
             ],
 
+        # 12
         "previous_receiver_fraud":
             history_features[
                 "previous_receiver_fraud"
             ],
 
+        # 13
         "historical_receiver_fraud_rate":
             history_features[
                 "historical_receiver_fraud_rate"
             ],
 
+        # 14
         "sender_balance_change":
             transaction_features[
                 "sender_balance_change"
             ],
 
+        # 15
         "receiver_balance_change":
             transaction_features[
                 "receiver_balance_change"
             ],
 
+        # 16
         "balance_ratio":
             transaction_features[
                 "balance_ratio"
             ],
 
+        # 17
         "hour":
             transaction_features[
                 "hour"
             ],
 
+        # 18
         "night_transaction":
             transaction_features[
                 "night_transaction"
             ],
 
+        # 19
         "historical_receiver_risk_score":
             historical_receiver_risk_score
     }

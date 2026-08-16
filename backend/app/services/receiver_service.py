@@ -24,7 +24,9 @@ def get_receiver_history(receiver_id):
 
 def calculate_receiver_risk(receiver_id):
 
-    history = get_receiver_history(receiver_id)
+    history = get_receiver_history(
+        receiver_id
+    )
 
     # -----------------------------------------------------
     # No history
@@ -41,10 +43,33 @@ def calculate_receiver_risk(receiver_id):
         }
 
     # -----------------------------------------------------
-    # Transaction count
+    # Total transaction count
+    #
+    # Includes transactions whose fraud status is
+    # currently unknown (NULL).
     # -----------------------------------------------------
 
-    transaction_count = len(history)
+    transaction_count = len(
+        history
+    )
+
+    # -----------------------------------------------------
+    # Only transactions with known fraud status
+    # -----------------------------------------------------
+    #
+    # is_fraud = 0  -> known legitimate
+    # is_fraud = 1  -> known fraud
+    # is_fraud = NULL -> not confirmed yet
+    #
+    # NULL transactions must NOT be included when
+    # calculating historical fraud statistics.
+    # -----------------------------------------------------
+
+    known_transactions = [
+        transaction
+        for transaction in history
+        if transaction.get("is_fraud") is not None
+    ]
 
     # -----------------------------------------------------
     # Fraud count
@@ -52,21 +77,37 @@ def calculate_receiver_risk(receiver_id):
 
     previous_fraud = sum(
         int(transaction["is_fraud"])
-        for transaction in history
+        for transaction in known_transactions
+    )
+
+    # -----------------------------------------------------
+    # Number of transactions with known fraud status
+    # -----------------------------------------------------
+
+    known_transaction_count = len(
+        known_transactions
     )
 
     # -----------------------------------------------------
     # Historical fraud rate
     # -----------------------------------------------------
 
-    historical_fraud_rate = (
-        previous_fraud / transaction_count
-    )
+    if known_transaction_count > 0:
+
+        historical_fraud_rate = (
+            previous_fraud
+            / known_transaction_count
+        )
+
+    else:
+
+        historical_fraud_rate = 0.0
 
     # -----------------------------------------------------
     # Risk score
     #
     # Current temporary scoring:
+    #
     # fraud rate contributes 60%
     # transaction activity contributes 20%
     # amount activity contributes 20%
@@ -86,14 +127,29 @@ def calculate_receiver_risk(receiver_id):
         + amount_score * 20
     )
 
-    risk_score = round(risk_score, 2)
+    risk_score = round(
+        risk_score,
+        2
+    )
+
+    # -----------------------------------------------------
+    # Return receiver risk
+    # -----------------------------------------------------
 
     return {
         "receiver_id": receiver_id,
-        "transaction_count": transaction_count,
-        "previous_fraud": previous_fraud,
-        "historical_fraud_rate": historical_fraud_rate,
-        "risk_score": risk_score
+
+        "transaction_count":
+            transaction_count,
+
+        "previous_fraud":
+            previous_fraud,
+
+        "historical_fraud_rate":
+            historical_fraud_rate,
+
+        "risk_score":
+            risk_score
     }
 
 
@@ -141,7 +197,9 @@ if __name__ == "__main__":
 
     receiver_id = "C_TEST_002"
 
-    print("\n========== RECEIVER RISK ==========\n")
+    print(
+        "\n========== RECEIVER RISK ==========\n"
+    )
 
     risk = calculate_receiver_risk(
         receiver_id
@@ -149,7 +207,9 @@ if __name__ == "__main__":
 
     print(risk)
 
-    print("\nSaving receiver risk...\n")
+    print(
+        "\nSaving receiver risk...\n"
+    )
 
     result = save_receiver_risk(
         risk
@@ -157,4 +217,6 @@ if __name__ == "__main__":
 
     print(result)
 
-    print("\n===================================\n")
+    print(
+        "\n===================================\n"
+    )
