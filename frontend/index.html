@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>SecurePay AI</title>
+
+    <link
+        rel="stylesheet"
+        href="css/style.css"
+    >
+</head>
+
+<body>
+
+    <!-- ========================================= -->
+    <!-- SIDEBAR -->
+    <!-- ========================================= -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+            <div class="logo-icon">S</div>
+
+            <div>
+                <h2>SecurePay</h2>
+                <span>AI Security</span>
+            </div>
+        </div>
+
+
+        <nav class="navigation">
+
+            <a
+                href="#"
+                class="nav-item active"
+            >
+                <span>⌂</span>
+                Dashboard
+            </a>
+
+            <a
+                href="#"
+                class="nav-item"
+            >
+                <span>₹</span>
+                Send Money
+            </a>
+
+            <a
+                href="#"
+                class="nav-item"
+            >
+                <span>↔</span>
+                Transactions
+            </a>
+
+            <a
+                href="#"
+                class="nav-item"
+            >
+                <span>⚠</span>
+                Fraud Alerts
+            </a>
+
+        </nav>
+
+
+        <div class="sidebar-bottom">
+
+            <div class="system-status">
+
+                <span class="status-dot"></span>
+
+                <div>
+                    <strong>System Online</strong>
+                    <small>SecurePay Engine</small>
+                </div>
+
+            </div>
+
+        </div>
+
+    </aside>
+
+
+    <!-- ========================================= -->
+    <!-- MAIN CONTENT -->
+    <!-- ========================================= -->
+
+    <main class="main-content">
+
+        <!-- TOP BAR -->
+
+        <header class="topbar">
+
+            <div>
+
+                <p class="page-label">
+                    SECUREPAY AI
+                </p>
+
+                <h1>
+                    Fraud Detection Dashboard
+                </h1>
+
+            </div>
+
+
+            <div class="user-section">
+
+                <div class="user-info">
+
+                    <strong>
+                        Admin
+                    </strong>
+
+                    <span>
+                        Security Analyst
+                    </span>
+
+                </div>
+
+                <div class="avatar">
+                    A
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- ===================================== -->
+        <!-- SYSTEM OVERVIEW -->
+        <!-- ===================================== -->
+
+        <section class="stats-grid">
+
+            <div class="stat-card">
+
+                <div class="stat-icon blue">
+                    ₹
+                </div>
+
+                <div>
+
+                    <p>Total Transactions</p>
+
+                    <h2 id="totalTransactions">
+                        --
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon red">
+                    ⚠
+                </div>
+
+                <div>
+
+                    <p>Fraud Transactions</p>
+
+                    <h2 id="fraudTransactions">
+                        --
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon green">
+                    ✓
+                </div>
+
+                <div>
+
+                    <p>Safe Transactions</p>
+
+                    <h2 id="safeTransactions">
+                        --
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon orange">
+                    !
+                </div>
+
+                <div>
+
+                    <p>Active Alerts</p>
+
+                    <h2 id="activeAlerts">
+                        --
+                    </h2>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ===================================== -->
+        <!-- CONTENT GRID -->
+        <!-- ===================================== -->
+
+        <section class="dashboard-grid">
+
+
+            <!-- RISK DISTRIBUTION -->
+
+            <div class="panel">
+
+                <div class="panel-header">
+
+                    <div>
+
+                        <p class="panel-label">
+                            RISK ANALYSIS
+                        </p>
+
+                        <h2>
+                            Risk Distribution
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+                <div class="risk-container">
+
+                    <div class="risk-item">
+
+                        <div class="risk-title">
+
+                            <span class="risk-dot low"></span>
+
+                            <span>Low Risk</span>
+
+                            <strong id="lowRisk">
+                                --
+                            </strong>
+
+                        </div>
+
+                        <div class="progress">
+
+                            <div
+                                class="progress-bar low"
+                                id="lowRiskBar"
+                                style="width: 0%"
+                            ></div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="risk-item">
+
+                        <div class="risk-title">
+
+                            <span class="risk-dot medium"></span>
+
+                            <span>Medium Risk</span>
+
+                            <strong id="mediumRisk">
+                                --
+                            </strong>
+
+                        </div>
+
+                        <div class="progress">
+
+                            <div
+                                class="progress-bar medium"
+                                id="mediumRiskBar"
+                                style="width: 0%"
+                            ></div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="risk-item">
+
+                        <div class="risk-title">
+
+                            <span class="risk-dot high"></span>
+
+                            <span>High Risk</span>
+
+                            <strong id="highRisk">
+                                --
+                            </strong>
+
+                        </div>
+
+                        <div class="progress">
+
+                            <div
+                                class="progress-bar high"
+                                id="highRiskBar"
+                                style="width: 0%"
+                            ></div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- SYSTEM INFORMATION -->
+
+            <div class="panel">
+
+                <div class="panel-header">
+
+                    <div>
+
+                        <p class="panel-label">
+                            AI ENGINE
+                        </p>
+
+                        <h2>
+                            System Status
+                        </h2>
+
+                    </div>
+
+                    <span class="online-badge">
+                        ONLINE
+                    </span>
+
+                </div>
+
+
+                <div class="system-info">
+
+                    <div class="info-row">
+
+                        <span>
+                            ML Model
+                        </span>
+
+                        <strong>
+                            RandomForest-v1
+                        </strong>
+
+                    </div>
+
+
+                    <div class="info-row">
+
+                        <span>
+                            Fraud Engine
+                        </span>
+
+                        <strong class="success-text">
+                            Active
+                        </strong>
+
+                    </div>
+
+
+                    <div class="info-row">
+
+                        <span>
+                            Receiver Risk Engine
+                        </span>
+
+                        <strong class="success-text">
+                            Active
+                        </strong>
+
+                    </div>
+
+
+                    <div class="info-row">
+
+                        <span>
+                            Database
+                        </span>
+
+                        <strong class="success-text">
+                            Connected
+                        </strong>
+
+                    </div>
+
+
+                    <div class="info-row">
+
+                        <span>
+                            API
+                        </span>
+
+                        <strong class="success-text">
+                            Connected
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ===================================== -->
+        <!-- RECENT TRANSACTIONS -->
+        <!-- ===================================== -->
+
+        <section class="panel transactions-panel">
+
+            <div class="panel-header">
+
+                <div>
+
+                    <p class="panel-label">
+                        MONITORING
+                    </p>
+
+                    <h2>
+                        Recent Transactions
+                    </h2>
+
+                </div>
+
+                <button
+                    class="refresh-btn"
+                    onclick="loadDashboard()"
+                >
+                    Refresh
+                </button>
+
+            </div>
+
+
+            <div class="table-container">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Transaction ID
+                            </th>
+
+                            <th>
+                                Type
+                            </th>
+
+                            <th>
+                                Amount
+                            </th>
+
+                            <th>
+                                Risk
+                            </th>
+
+                            <th>
+                                Prediction
+                            </th>
+
+                            <th>
+                                Status
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody id="transactionTable">
+
+                        <tr>
+
+                            <td
+                                colspan="6"
+                                class="empty-state"
+                            >
+                                Loading transactions........
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+
+    <script src="js/api.js"></script>
+
+</body>
+
+</html>
